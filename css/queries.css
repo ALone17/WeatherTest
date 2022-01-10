@@ -1,0 +1,53 @@
+@media (max-width: 144rem) {
+  html {
+    font-size: 50%;
+  }
+}
+@media (max-width: 102.4rem) {
+  html {
+    font-size: 35%;
+  }
+
+  .weather-main {
+    height: 25vh;
+  }
+
+  .weather-for-the-day {
+    height: 25vh;
+  }
+}
+@media (max-width: 76.8rem) {
+  .header {
+    margin-bottom: 9.2rem;
+  }
+
+  .weather-main {
+    width: 65vw;
+    margin-bottom: 6.4rem;
+  }
+
+  .weather-for-the-day {
+    width: 65vw;
+  }
+}
+
+@media (max-width: 42.5rem) {
+  html {
+    font-size: 24.5%;
+  }
+  .header {
+    flex-direction: column;
+    gap: 3.6rem;
+    margin-bottom: 19.2rem;
+  }
+  .weather-main {
+    width: 80vw;
+  }
+
+  .weather-for-the-day {
+    width: 80vw;
+  }
+  .weather-for-an-hours {
+    font-size: 3.6rem;
+  }
+}

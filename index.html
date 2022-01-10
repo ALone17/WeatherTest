@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="совокупность значений метеорологических элементов и атмосферных явлений, наблюдаемых в определённый момент времени в той или иной точке пространства. Понятие «Погода» относится к текущему состоянию атмосферы, в противоположность понятию «Климат», которое относится к среднему состоянию атмосферы за длительный период времени">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;400;500;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="img/icon/icon.png">
+    <link rel="appel-touch-icon" href="img/icon/icon-appel.png" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/queries.css">
+    <title>Погода - Готовимся к Погоде, учитываем климат!</title>
+</head>
+
+<body>
+    <div class='container'>
+        <header class="header">
+            <h1 class="primary-header">
+                <span class="primary-header-first">Прогноз</span>
+                <span class="primary-header-second">Погоды</span></h1>
+            <div class="search-form">
+                <form class="search">
+                    <input required type="text" id="search" class="search-field"
+                        placeholder="Введи название своего города...">
+                    <label for="search" class="search-label">Введи название своего города</label>
+                    <button type="submit" class="btn-search">
+                        <ion-icon class="search-icon" name="search-outline"></ion-icon>
+                    </button>
+                </form>
+            </div>
+            <div class="degrees-temperature">
+                <a class="deg deg-activ">C</a>
+                <a class="deg">F</a>
+            </div>
+        </header>
+        <section class="weather-main">
+            <h2 class="city-name">Москва, Россия</h2>
+            <div class="date-time">
+                <p class="date">чт. 2нояб. 2021г.</p>
+                <p class="time">21:50</p>
+            </div>
+            <div class="temperature">
+                <p class="degrees">19</p>
+                <p class="degress-apparent"></p>
+            </div>
+            <div class="Precipitation">
+            </div>
+        </section>
+        <section class="weather-for-the-day">
+            <a href="#" class="btn-scroll btn-scroll--left">
+                <ion-icon class="scroll-icon" name="arrow-back-circle"></ion-icon>
+            </a>
+            <a href="#" class="btn-scroll btn-scroll--right">
+                <ion-icon class="scroll-icon" name="arrow-forward-circle"></ion-icon>
+            </a>
+            <div class="weather-all-temp">
+            </div>
+        </section>
+    </div>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js">
+    </script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>

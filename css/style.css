@@ -1,0 +1,374 @@
+*,
+*::after,
+*::before {
+  padding: 0;
+  margin: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: "Outfit", sans-serif;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.container {
+  height: 100vh;
+  background-image: url("../img/hero.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+.header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 8rem;
+  padding: 6.4rem;
+  margin-bottom: 6.2rem;
+}
+
+.primary-header {
+  font-size: 3rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.primary-header-first {
+  display: inline-block;
+  animation: moveInLeft;
+  animation-duration: 1s;
+  animation-timing-function: ease-out;
+}
+
+.primary-header-second {
+  display: inline-block;
+  font-weight: 500;
+  animation: moveInTop;
+  animation-duration: 1s;
+  animation-timing-function: ease-out;
+}
+
+@keyframes moveInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-23rem);
+  }
+  80% {
+    transform: translateX(0.5rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes moveInTop {
+  0% {
+    opacity: 0;
+    transform: translateY(-23rem);
+  }
+  80% {
+    transform: translateY(0.5rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes moveInBottom {
+  0% {
+    transform: translateY(200rem);
+  }
+
+  /* 80% {
+    transform: translateY(-1rem);
+  } */
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes moveInRight {
+  0% {
+    transform: translateX(400rem);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.search {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  border: 0.8px solid #aec2d2;
+  border-radius: 3rem;
+  width: 60rem;
+  height: 7rem;
+  padding: 0 1rem 0 3rem;
+  transition: all 0.3s;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.158);
+  backdrop-filter: blur(1.5rem);
+}
+.search:focus-within {
+  box-shadow: 0 1.5rem 1.5rem rgba(0, 0, 0, 0.2);
+  transform: translateY(-0.3rem);
+}
+.search-field {
+  font-size: 3rem;
+  font-weight: 500;
+  width: 50rem;
+  border: none;
+  background-color: #fcfeff;
+  outline: none;
+  background: transparent;
+}
+
+.btn-search {
+  border: none;
+  cursor: pointer;
+  background: transparent;
+}
+
+.search-icon {
+  width: 3rem;
+  height: 3rem;
+  transition: all 0.3s;
+  background: transparent;
+}
+
+.search:focus-within .search-icon {
+  width: 4.8rem;
+  height: 4.8rem;
+}
+
+.search-icon:active {
+  transform: scale(0.5);
+}
+
+.search-label {
+  position: absolute;
+  top: 7rem;
+  font-size: 3rem;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.search-field:placeholder-shown + .search-label {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-5.5rem);
+}
+
+/* Switch */
+.degrees-temperature {
+  display: flex;
+  gap: 0.2rem;
+  font-size: 3.2rem;
+  font-weight: 700;
+  backdrop-filter: blur(1rem);
+  pointer-events: none;
+}
+
+.deg {
+  cursor: pointer;
+  padding: 1rem;
+  color: #fff;
+}
+
+.deg-activ {
+  background-color: #fff;
+  color: #000;
+  border-radius: 0.5rem;
+}
+
+/* Switch end */
+
+.weather-main {
+  /* display: grid; */
+  display: none;
+  /* justify-content: space-between; */
+  grid-template-columns: repeat(3, 3fr);
+  grid-template-rows: 1fr 3fr 1fr;
+  align-items: center;
+  width: 50vw;
+  height: 35vh;
+  margin: 0 auto;
+  margin-bottom: 4.4rem;
+  border-radius: 5rem;
+  background-image: linear-gradient(to top, #a5d8ffd0, #38d9a93d);
+  backdrop-filter: blur(1rem);
+  /* box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.288); */
+  animation: moveInBottom 1.5s ease-out;
+  animation-play-state: paused;
+  padding: 0rem 3rem;
+}
+
+.city-name {
+  text-align: center;
+  font-size: 5.2rem;
+  font-weight: 500;
+  color: #fff;
+  text-shadow: 0 0 3px #333;
+  grid-column: 1/-1;
+}
+
+.date {
+  font-size: 3.6rem;
+  font-weight: 500;
+  /* color: #191919; */
+  color: #fff;
+  margin-bottom: 3.2rem;
+  text-shadow: 0 0 2px #191919;
+}
+
+.time {
+  font-size: 5.2rem;
+  font-weight: 100;
+  /* color: #333; */
+  color: #fff;
+  text-shadow: 0 0 5px #333;
+  text-align: center;
+}
+
+.temperature {
+  text-align: center;
+  font-size: 12.8rem;
+  color: #fff;
+  text-shadow: 0 0 5px #333;
+}
+
+.degrees {
+  position: relative;
+}
+
+.degrees::after {
+  content: "°C";
+  font-size: 3rem;
+  position: absolute;
+  top: 3rem;
+}
+
+.degreesF::after {
+  content: "°F";
+}
+
+.degress-apparent {
+  font-size: 2.4rem;
+}
+
+.Precipitation {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.sunny-icon {
+  margin: 0 auto;
+  width: 12.8rem;
+  height: 12.8rem;
+  color: #ffd43b;
+}
+
+.moon-icon {
+  margin: 0 auto;
+  width: 12.8rem;
+  height: 12.8rem;
+  color: #ffd43b;
+}
+
+.snow-icon {
+  margin: 0 auto;
+  width: 12.8rem;
+  height: 12.8rem;
+  color: #0c2ef1;
+}
+
+.rainy-icon {
+  margin: 0 auto;
+  width: 12.8rem;
+  height: 12.8rem;
+  color: #0c2ef1;
+}
+
+.precipitation-name {
+  font-size: 3rem;
+  color: #fff;
+  font-weight: 500;
+}
+
+.weather-for-the-day {
+  position: relative;
+  display: none;
+  align-items: center;
+  width: 50vw;
+  height: 35vh;
+  margin: 0 auto;
+  border-radius: 5rem;
+  background-image: linear-gradient(to top, #a5d8ffd0, #38d9a93d);
+  backdrop-filter: blur(1rem);
+  /* box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.288); */
+
+  overflow: hidden;
+  animation: moveInRight 3s ease-out;
+  /* animation-delay: 1.5s; */
+  animation-play-state: paused;
+}
+
+.weather-for-an-hours {
+  color: #fff;
+  font-size: 2rem;
+  padding: 0 3rem;
+}
+
+.weather-all-temp {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.5s;
+  scroll-behavior: smooth;
+}
+
+.scroll-icon {
+  width: 5rem;
+  height: 5rem;
+  color: #000;
+}
+
+.btn-scroll:link {
+  position: absolute;
+  z-index: 3;
+  opacity: 0.5;
+  border-radius: 50%;
+  box-shadow: 0.5rem 1rem 1rem rgba(0, 0, 0, 0.762);
+  background-color: #fff;
+  transition: all 0.3s;
+}
+
+.btn-scroll:hover {
+  opacity: 1;
+}
+
+.btn-scroll:active {
+  transform: scale(0.7);
+  box-shadow: 0.25rem 0.5rem 0.5rem rgba(0, 0, 0, 0.849);
+}
+
+.btn-scroll--left {
+  margin-left: 1rem;
+}
+
+.btn-scroll--right {
+  right: 0;
+  margin-right: 1rem;
+}

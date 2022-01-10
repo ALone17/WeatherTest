@@ -3,12 +3,12 @@
     {
       "src": "img/icon/icon-appel.png",
       "type": "image/png",
-      "sizes": "192x256"
+      "sizes": "192x192"
     },
     {
       "src": "img/icon/icon-android.png",
       "type": "image/png",
-      "sizes": "512x682"
+      "sizes": "512x512"
     }
   ]
 }

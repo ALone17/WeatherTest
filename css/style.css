@@ -328,12 +328,13 @@ body {
   color: #fff;
   font-size: 2rem;
   padding: 0 3rem;
+  text-align: center;
 }
 
 .weather-all-temp {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
   gap: 0.4rem;
   transition: all 0.5s;
   scroll-behavior: smooth;

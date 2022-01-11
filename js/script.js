@@ -89,9 +89,10 @@ const celsiusToFahrenheit = function (celsius) {
 };
 
 const changeImgAndIcon = function (Code) {
+
     backgroundFon.style.backgroundImage = `url(/img/осадки/${weatherIcon(Code)}.jpg)`;
     Precipitation.innerHTML = "";
-    Precipitation.insertAdjacentHTML('afterbegin', `<ion-icon class="${new Date().getHours() > 7 && new Date().getHours() < 20 ? weatherIcon(Code) : 'moon'}-icon" name="${new Date().getHours() > 7 && new Date().getHours() < 20 ? weatherIcon(Code) : 'moon'}"></ion-icon>
+    Precipitation.insertAdjacentHTML('afterbegin', `<ion-icon class="${(new Date().getHours() > 7 && new Date().getHours() < 20) || weatherIcon(Code) === "cloud" ? weatherIcon(Code) : 'moon'}-icon" name="${(new Date().getHours() > 7 && new Date().getHours() < 20) || weatherIcon(Code) === "cloud" ? weatherIcon(Code) : 'moon'}"></ion-icon>
     <p class="precipitation-name">${weatherCode(Code)}</p>`);
 
 };
@@ -138,10 +139,18 @@ const weatherIcon = function (Code) {
     switch (Code) {
         case 0: case 1:
             return 'sunny';
-        case 2: case 3: case 45: case 48: case 51: case 53: case 55: case 56: case 57:
-        case 61: case 63: case 65: case 66: case 67: case 80: case 81: case 82: case 95:
-        case 96: case 99:
-            return 'rainy';
+        case 2:
+        case 3:
+            return "cloud";
+        case 45:
+            return "cloud-download";
+        case 48: case 51: case 53: case 55: case 56: case 57:
+            return "snow";
+        case 61: case 63: case 65: case 66: case 67:
+        case 80: case 81: case 82:
+            return "rainy";
+        case 95: case 96: case 99:
+            return "thunderstorm";
         case 71: case 73: case 77: case 85: case 86:
             return 'snow';
 

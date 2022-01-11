@@ -300,6 +300,27 @@ body {
   color: #0c2ef1;
 }
 
+.cloud-icon {
+  margin: 0 auto;
+  width: 12.8rem;
+  height: 12.8rem;
+  color: #fff;
+}
+
+.cloud-download-icon {
+  margin: 0 auto;
+  width: 12.8rem;
+  height: 12.8rem;
+  color: #fff;
+}
+
+.thunderstorm-icon {
+  margin: 0 auto;
+  width: 12.8rem;
+  height: 12.8rem;
+  color: #fff;
+}
+
 .precipitation-name {
   font-size: 3rem;
   color: #fff;

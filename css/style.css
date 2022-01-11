@@ -44,6 +44,7 @@ body {
   animation: moveInLeft;
   animation-duration: 1s;
   animation-timing-function: ease-out;
+  user-select: none;
 }
 
 .primary-header-second {
@@ -52,6 +53,7 @@ body {
   animation: moveInTop;
   animation-duration: 1s;
   animation-timing-function: ease-out;
+  user-select: none;
 }
 
 @keyframes moveInLeft {

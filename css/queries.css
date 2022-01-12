@@ -1,6 +1,7 @@
 @media (max-width: 102.4rem) {
   html {
     font-size: 35%;
+    overflow: hidden;
   }
 
   .weather-main {

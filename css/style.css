@@ -340,8 +340,6 @@ body {
   background-image: linear-gradient(to top, #a5d8ffd0, #38d9a93d);
   backdrop-filter: blur(1rem);
   /* box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.288); */
-
-  overflow: hidden;
   animation: moveInRight 3s ease-out;
   /* animation-delay: 1.5s; */
   animation-play-state: paused;
@@ -361,6 +359,7 @@ body {
   gap: 0.4rem;
   transition: all 0.5s;
   scroll-behavior: smooth;
+  overflow: hidden;
 }
 
 .scroll-icon {

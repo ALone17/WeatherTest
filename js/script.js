@@ -20,11 +20,9 @@ async function test(e) {
         e.preventDefault();
         const city = await (await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${searchField.value}&language=ru`)).json();
         const { longitude, latitude, country, admin1 } = city.results[0];
-        console.log(country, admin1);
 
         const { current_weather, hourly } = await (await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m&hourly=weathercode&hourly=apparent_temperature&current_weather=true&past_days=0`)).json();
 
-        console.log(current_weather, hourly);
         updateWeatherAnHours(hourly);
         updateTemperature(current_weather, country, admin1, hourly);
         document.querySelector('.weather-main').style.display = "grid";
@@ -38,6 +36,7 @@ async function test(e) {
         searchField.blur();
         degSwitch.style.pointerEvents = 'auto';
         changeImgAndIcon(current_weather.weathercode);
+        weatherAllTemp.scrollLeft = 0;
     }
     catch (e) {
         console.error('Упс');
@@ -162,47 +161,68 @@ const weatherIcon = function (Code) {
 const updateWeatherAnHours = function (hourly) {
     weatherAllTemp.innerHTML = "";
     hourly.temperature_2m.forEach((temp, index) => {
-        let time;
-        if (index === 0 || new Date(hourly.time[index]).getDay() !== new Date(hourly.time[index - 1]).getDay()) {
-            time = new Intl.DateTimeFormat('ru-RU', {
-                hour: 'numeric', minute: 'numeric', weekday: 'short',
-                day: 'numeric', month: 'short',
-            }).format(new Date(hourly.time[index]));
-        }
-        else {
-            time = new Intl.DateTimeFormat('ru-RU', {
-                hour: 'numeric', minute: 'numeric'
-            }).format(new Date(hourly.time[index]));
-        }
-        const weatherCode = hourly.weathercode[index];
-        weatherAllTemp.insertAdjacentHTML("beforeend", `
+        const temperatureHours = new Date(hourly.time[index]);
+        console.log(temperatureHours.getHours());
+        if (temperatureHours.getHours() === 0 ||
+            temperatureHours.getHours() === 7 ||
+            temperatureHours.getHours() === 12 ||
+            temperatureHours.getHours() === 17) {
+            let time;
+            if (index === 0 || temperatureHours.getDay() !== new Date(hourly.time[index - 1]).getDay()) {
+                time = new Intl.DateTimeFormat('ru-RU', {
+                    hour: 'numeric', minute: 'numeric', weekday: 'short',
+                    day: 'numeric', month: 'short',
+                }).format(temperatureHours);
+            }
+            else {
+                time = new Intl.DateTimeFormat('ru-RU', {
+                    hour: 'numeric', minute: 'numeric'
+                }).format(temperatureHours);
+            }
+            const weatherCode = hourly.weathercode[index];
+            weatherAllTemp.insertAdjacentHTML("beforeend", `
              <div class="weather-for-an-hours">
             <p class="time-hour">${time}</p>
             <ion-icon class="${weatherIcon(weatherCode)}-icon" name="${weatherIcon(weatherCode)}"></ion-icon>
             <p class="degrees-hour">${temp}&deg;</p>
         </div>
             `);
+        }
     });
 
 
 };
 
 
-let slidePosition = 0;
+// let slidePosition = 0;
+
+// btnScrollLeft.addEventListener('click', function (e) {
+//     e.preventDefault();
+//     if (Math.trunc(slidePosition) === 0) return;
+//     slidePosition += 75.2;
+//     weatherAllTemp.style.transform = `translateX(${slidePosition}rem)`;
+// });
+
+// btnScrollRight.addEventListener('click', function (e) {
+//     e.preventDefault();
+//     if (Math.trunc(slidePosition) === -3158) return;
+//     slidePosition -= 75.2;
+//     weatherAllTemp.style.transform = `translateX(${slidePosition}rem)`;
+// });
+
+weatherAllTemp.scroll({ left: 0, top: 0, behavior: "smooth" });
 
 btnScrollLeft.addEventListener('click', function (e) {
     e.preventDefault();
-    if (Math.trunc(slidePosition) === 0) return;
-    slidePosition += 75.2;
-    weatherAllTemp.style.transform = `translateX(${slidePosition}rem)`;
-});
+
+    weatherAllTemp.scrollLeft -= 750;
+})
 
 btnScrollRight.addEventListener('click', function (e) {
     e.preventDefault();
-    if (Math.trunc(slidePosition) === -3158) return;
-    slidePosition -= 75.2;
-    weatherAllTemp.style.transform = `translateX(${slidePosition}rem)`;
-});
+
+    weatherAllTemp.scrollLeft += 750;
+})
 
 let celsiusAnHour = [];
 

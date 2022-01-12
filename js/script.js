@@ -160,29 +160,31 @@ const weatherIcon = function (Code) {
 
 const updateWeatherAnHours = function (hourly) {
     weatherAllTemp.innerHTML = "";
+    let time;
     hourly.temperature_2m.forEach((temp, index) => {
         const temperatureHours = new Date(hourly.time[index]);
-        console.log(temperatureHours.getHours());
         if (temperatureHours.getHours() === 0 ||
             temperatureHours.getHours() === 7 ||
             temperatureHours.getHours() === 12 ||
             temperatureHours.getHours() === 17) {
-            let time;
             if (index === 0 || temperatureHours.getDay() !== new Date(hourly.time[index - 1]).getDay()) {
                 time = new Intl.DateTimeFormat('ru-RU', {
-                    hour: 'numeric', minute: 'numeric', weekday: 'short',
-                    day: 'numeric', month: 'short',
+                    weekday: "long",
+                    day: 'numeric', month: 'long', year: "numeric"
                 }).format(temperatureHours);
+                weatherAllTemp.insertAdjacentHTML('beforeend', `
+                <div class="weater-for-the-days weater-for-the-days-${temperatureHours.getDay()}">
+                <h3 class="weater-day">${time}</h3>
+                </div>`)
             }
-            else {
-                time = new Intl.DateTimeFormat('ru-RU', {
-                    hour: 'numeric', minute: 'numeric'
-                }).format(temperatureHours);
-            }
+            let timeDay = new Intl.DateTimeFormat('ru-RU', {
+                hour: 'numeric', minute: 'numeric'
+            }).format(temperatureHours);
             const weatherCode = hourly.weathercode[index];
-            weatherAllTemp.insertAdjacentHTML("beforeend", `
+            console.log(time);
+            document.querySelector(`.weater-for-the-days-${temperatureHours.getDay()}`).insertAdjacentHTML("beforeend", `
              <div class="weather-for-an-hours">
-            <p class="time-hour">${time}</p>
+            <p class="time-hour">${timeDay}</p>
             <ion-icon class="${weatherIcon(weatherCode)}-icon" name="${weatherIcon(weatherCode)}"></ion-icon>
             <p class="degrees-hour">${temp}&deg;</p>
         </div>
@@ -215,13 +217,13 @@ weatherAllTemp.scroll({ left: 0, top: 0, behavior: "smooth" });
 btnScrollLeft.addEventListener('click', function (e) {
     e.preventDefault();
 
-    weatherAllTemp.scrollLeft -= 750;
+    weatherAllTemp.scrollLeft -= 820;
 })
 
 btnScrollRight.addEventListener('click', function (e) {
     e.preventDefault();
 
-    weatherAllTemp.scrollLeft += 750;
+    weatherAllTemp.scrollLeft += 820;
 })
 
 let celsiusAnHour = [];

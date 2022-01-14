@@ -21,14 +21,15 @@ async function test(e) {
         const city = await (await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${searchField.value}&language=ru`)).json();
         const { longitude, latitude, country, admin1 } = city.results[0];
 
-        const { current_weather, hourly } = await (await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m&hourly=weathercode&hourly=apparent_temperature&current_weather=true&past_days=0`)).json();
-
+        const { current_weather, hourly } = await (await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m&hourly=weathercode&hourly=apparent_temperature&current_weather=true&past_days=0&windspeed_unit=ms`)).json();
+        console.log(current_weather);
         updateWeatherAnHours(hourly);
         updateTemperature(current_weather, country, admin1, hourly);
         document.querySelector('.weather-main').style.display = "grid";
         document.querySelector('.weather-main').style.animationPlayState = "running";
         document.querySelector('.weather-for-the-day').style.display = "flex";
         document.querySelector('.weather-for-the-day').style.animationPlayState = "running";
+        document.querySelector('.weather-speed').querySelector('span').textContent = `${current_weather.windspeed}м/c`;
         let clock;
         updateTimeAndDate(clock);
 
@@ -195,23 +196,6 @@ const updateWeatherAnHours = function (hourly) {
 
 };
 
-
-// let slidePosition = 0;
-
-// btnScrollLeft.addEventListener('click', function (e) {
-//     e.preventDefault();
-//     if (Math.trunc(slidePosition) === 0) return;
-//     slidePosition += 75.2;
-//     weatherAllTemp.style.transform = `translateX(${slidePosition}rem)`;
-// });
-
-// btnScrollRight.addEventListener('click', function (e) {
-//     e.preventDefault();
-//     if (Math.trunc(slidePosition) === -3158) return;
-//     slidePosition -= 75.2;
-//     weatherAllTemp.style.transform = `translateX(${slidePosition}rem)`;
-// });
-
 weatherAllTemp.scroll({ left: 0, top: 0, behavior: "smooth" });
 
 btnScrollLeft.addEventListener('click', function (e) {
@@ -260,3 +244,5 @@ degSwitch.addEventListener('click', function (e) {
 });
 
 search.addEventListener('submit', test);
+
+

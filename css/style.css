@@ -201,8 +201,8 @@ body {
   /* justify-content: space-between; */
   grid-template-columns: repeat(3, 3fr);
   grid-template-rows: 1fr 3fr 1fr;
-  align-items: center;
-  width: 50vw;
+  align-items: end;
+  width: 55vw;
   height: 35vh;
   margin: 0 auto;
   margin-bottom: 4.4rem;
@@ -224,12 +224,18 @@ body {
   grid-column: 1/-1;
 }
 
+.date-time {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+}
+
 .date {
-  font-size: 3.6rem;
+  font-size: 3.2rem;
   font-weight: 500;
   /* color: #191919; */
   color: #fff;
-  margin-bottom: 3.2rem;
   text-shadow: 0 0 2px #191919;
 }
 
@@ -240,6 +246,13 @@ body {
   color: #fff;
   text-shadow: 0 0 5px #333;
   text-align: center;
+}
+
+.weather-speed {
+  text-align: center;
+  font-size: 2.4rem;
+  color: #fff;
+  text-shadow: 0 0 5px #333;
 }
 
 .temperature {
@@ -410,4 +423,8 @@ body {
   grid-column: 1/5;
   text-align: center;
   font-size: 2.4rem;
+  font-weight: 500;
+  color: #fff;
+  margin-bottom: 3.2rem;
+  text-shadow: 0 0 2px #191919;
 }

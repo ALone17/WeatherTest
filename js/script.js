@@ -18,6 +18,7 @@ let celsiusNow;
 async function test(e) {
     try {
         e.preventDefault();
+        if (Number.isInteger(Number(searchField.value))) return;
         const city = await (await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${searchField.value}&language=ru`)).json();
         const { longitude, latitude, country, admin1 } = city.results[0];
 
@@ -29,6 +30,7 @@ async function test(e) {
         document.querySelector('.weather-main').style.animationPlayState = "running";
         document.querySelector('.weather-for-the-day').style.display = "flex";
         document.querySelector('.weather-for-the-day').style.animationPlayState = "running";
+        document.querySelector('.section-error').style.display = "none";
         document.querySelector('.weather-speed').querySelector('span').textContent = `${current_weather.windspeed}м/c`;
         let clock;
         updateTimeAndDate(clock);
@@ -41,6 +43,13 @@ async function test(e) {
     }
     catch (e) {
         console.error('Упс');
+        document.querySelector('.weather-main').style.display = "none";
+        document.querySelector('.weather-main').style.animationPlayState = "paused";
+        document.querySelector('.weather-for-the-day').style.display = "none";
+        document.querySelector('.weather-for-the-day').style.animationPlayState = "paused";
+        backgroundFon.style.backgroundImage = `url(img/error.jpg)`;
+        document.querySelector('.section-error').style.display = "block";
+        document.querySelector('.error').textContent = `Error: ${e}`;
     }
 }
 

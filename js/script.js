@@ -11,6 +11,7 @@ const weatherForTheDay = document.querySelector('.weather-for-the-day');
 const weatherAllTemp = document.querySelector('.weather-all-temp');
 const btnScrollLeft = document.querySelector('.btn-scroll--left');
 const btnScrollRight = document.querySelector('.btn-scroll--right');
+const weatherSpeed = document.querySelector('.weather-speed');
 
 
 let celsiusNow;
@@ -23,7 +24,7 @@ async function test(e) {
         const city = await (await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${searchField.value}&language=ru`)).json();
         const { longitude, latitude, country, admin1 } = city.results[0];
 
-        const { current_weather, hourly } = await (await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m&hourly=weathercode&hourly=apparent_temperature&current_weather=true&past_days=0&windspeed_unit=ms`)).json();
+        const { current_weather, hourly } = await (await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m&hourly=weathercode&hourly=apparent_temperature&current_weather=true&past_days=0&windspeed_unit=ms&winddirection_10m_dominant`)).json();
         console.log(current_weather);
         updateWeatherAnHours(hourly);
         updateTemperature(current_weather, country, admin1, hourly);
@@ -32,7 +33,7 @@ async function test(e) {
         document.querySelector('.weather-for-the-day').style.display = "flex";
         document.querySelector('.weather-for-the-day').style.animationPlayState = "running";
         document.querySelector('.section-error').style.display = "none";
-        document.querySelector('.weather-speed').querySelector('span').textContent = `${current_weather.windspeed}м/c`;
+        windDirection(current_weather.windspeed, current_weather.winddirection);
         let clock;
         updateTimeAndDate(clock);
 
@@ -52,6 +53,21 @@ async function test(e) {
         document.querySelector('.section-error').style.display = "block";
         document.querySelector('.error').textContent = `Error: ${e}`;
     }
+}
+
+function windDirection(windSpeed, winddirection) {
+    if (winddirection >= 45 && winddirection < 90) winddirection = 'Северо-Восточный';
+    if (winddirection >= 90 && winddirection < 135) winddirection = "Восточный";
+    if (winddirection >= 135 && winddirection < 180) winddirection = "Южно-Восточный";
+    if (winddirection >= 180 && winddirection < 225) winddirection = "Южный";
+    if (winddirection >= 225 && winddirection < 270) winddirection = "Южно-Западный";
+    if (winddirection >= 270 && winddirection < 315) winddirection = "Западный";
+    if (winddirection >= 315 && winddirection < 360) winddirection = "Северо-Западный";
+    if (winddirection >= 360) winddirection = "Северный";
+
+    weatherSpeed.textContent = `${winddirection}: `;
+    weatherSpeed.insertAdjacentHTML('beforeend', '<span></span>');
+    weatherSpeed.querySelector('span').textContent = `${windSpeed}м/c`;
 }
 
 let degreesApparent;

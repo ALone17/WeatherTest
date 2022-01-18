@@ -65,6 +65,7 @@
     width: 99%;
     height: 20vh;
     position: relative;
+    overflow: hidden;
   }
 
   .date-time {
@@ -84,5 +85,6 @@
   .weather-for-the-day {
     width: 99%;
     height: 20vh;
+    overflow: hidden;
   }
 } ;

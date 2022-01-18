@@ -18,6 +18,7 @@ let celsiusNow;
 async function test(e) {
     try {
         e.preventDefault();
+        // searchField.value.split('').forEach(e => console.log('123456789'.indexOf(e)));
         if (Number.isInteger(Number(searchField.value))) return;
         const city = await (await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${searchField.value}&language=ru`)).json();
         const { longitude, latitude, country, admin1 } = city.results[0];

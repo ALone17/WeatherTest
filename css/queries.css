@@ -59,3 +59,18 @@
     transform: translateY(3.8rem);
   }
 }
+
+@media (max-width: 23.75rem) {
+  .weather-main {
+    width: 90%;
+    height: 18vh;
+  }
+  .weather-speed {
+    transform: translate(100%, 100%);
+  }
+
+  .weather-for-the-day {
+    width: 90%;
+    height: 20vh;
+  }
+} ;

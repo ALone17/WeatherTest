@@ -62,20 +62,27 @@
 
 @media (max-width: 23.75rem) {
   .weather-main {
-    width: 95%;
+    width: 99%;
     height: 20vh;
+    position: relative;
+  }
+
+  .date-time {
+    align-self: center;
   }
 
   .date {
-    font-size: 2.2rem;
+    font-size: 2.8rem;
   }
   .weather-speed {
-    font-size: 2rem;
-    transform: translate(100%, 100%);
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%);
   }
 
   .weather-for-the-day {
-    width: 90%;
+    width: 99%;
     height: 20vh;
   }
 } ;

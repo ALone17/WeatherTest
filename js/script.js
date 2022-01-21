@@ -25,7 +25,6 @@ async function test(e) {
         const { longitude, latitude, country, admin1 } = city.results[0];
 
         const { current_weather, hourly } = await (await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m&hourly=weathercode&hourly=apparent_temperature&current_weather=true&past_days=0&windspeed_unit=ms&winddirection_10m_dominant`)).json();
-        console.log(current_weather);
         updateWeatherAnHours(hourly);
         updateTemperature(current_weather, country, admin1, hourly);
         document.querySelector('.weather-main').style.display = "grid";
@@ -67,17 +66,17 @@ function windDirection(windSpeed, winddirection) {
 
     weatherSpeed.textContent = `${winddirection}: `;
     weatherSpeed.insertAdjacentHTML('beforeend', '<span></span>');
-    weatherSpeed.querySelector('span').textContent = `${windSpeed}м/c`;
+    weatherSpeed.querySelector('span').textContent = `${Math.round(windSpeed)} м/c`;
 }
 
 let degreesApparent;
 const updateTemperature = function (current_weather, country, city, hourly) {
-    temperatureDegrees.textContent = current_weather.temperature;
+    temperatureDegrees.textContent = Math.round(+current_weather.temperature);
     cityName.textContent = `${city}, ${country}`;
     celsiusNow = current_weather.temperature;
     hourly.time.forEach((el, i) => {
         if (current_weather.time === el)
-            document.querySelector('.degress-apparent').textContent = `Ощущается как: ${hourly.apparent_temperature[i]}°`;
+            document.querySelector('.degress-apparent').textContent = `Ощущается как: ${Math.round(hourly.apparent_temperature[i])}°`;
         degreesApparent = hourly.apparent_temperature[i];
     });
 };
@@ -213,7 +212,7 @@ const updateWeatherAnHours = function (hourly) {
              <div class="weather-for-an-hours">
             <p class="time-hour">${timeDay}</p>
             <ion-icon class="${weatherIcon(weatherCode)}-icon" name="${weatherIcon(weatherCode)}"></ion-icon>
-            <p class="degrees-hour">${temp}&deg;</p>
+            <p class="degrees-hour">${Math.round(temp)}&deg;</p>
         </div>
             `);
         }
@@ -243,7 +242,7 @@ degSwitch.addEventListener('click', function (e) {
     if (e.target.textContent === "C" && !(e.target.classList.contains('deg-activ'))) {
         temperatureDegrees.classList.remove('degreesF');
         temperatureDegrees.textContent = celsiusNow;
-        document.querySelector('.degress-apparent').textContent = `Ощущается как: ${degreesApparent}°`;
+        document.querySelector('.degress-apparent').textContent = `Ощущается как: ${Math.round(degreesApparent)}°`;
         if (celsiusAnHour.length > 1) {
             [...document.querySelectorAll('.degrees-hour')]
                 .forEach((el, i) => el.textContent = celsiusAnHour[i]);
@@ -254,12 +253,12 @@ degSwitch.addEventListener('click', function (e) {
     }
     if (e.target.textContent === "F" && !(e.target.classList.contains('deg-activ'))) {
         temperatureDegrees.classList.add('degreesF');
-        temperatureDegrees.textContent = Math.trunc(celsiusToFahrenheit(celsiusNow));
+        temperatureDegrees.textContent = Math.round(celsiusToFahrenheit(celsiusNow));
         [...document.querySelectorAll('.degrees-hour')].forEach(el => {
             celsiusAnHour.push(el.textContent);
-            el.textContent = `${Math.trunc(celsiusToFahrenheit(+el.textContent.replace('°', '')))}°`
+            el.textContent = `${Math.round(celsiusToFahrenheit(+el.textContent.replace('°', '')))}°`
         });
-        document.querySelector('.degress-apparent').textContent = `Ощущается как: ${Math.trunc(celsiusToFahrenheit(degreesApparent))}°`;
+        document.querySelector('.degress-apparent').textContent = `Ощущается как: ${Math.round(celsiusToFahrenheit(degreesApparent))}°`;
     }
 
     if (e.target.classList.contains('deg')) {

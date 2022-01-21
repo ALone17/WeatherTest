@@ -17,29 +17,45 @@ const pressireMl = document.querySelector('.pressure');
 
 let celsiusNow;
 
+
+
+async function sucsessPos(crd) {
+    const pos = crd.coords;
+    const { city, country } = await cityData(pos);
+
+    const { current_weather, hourly } = await weatherData(pos.longitude, pos.latitude);
+    updateWeatherAnHours(hourly);
+    updateTemperature(current_weather, country, city, hourly);
+    windDirection(current_weather.windspeed, current_weather.winddirection);
+    let clock;
+    updateTimeAndDate(clock);
+    changeImgAndIcon(current_weather.weathercode);
+    startUse();
+}
+
+
+
+navigator.geolocation.getCurrentPosition(sucsessPos);
+
+
+
 async function test(e) {
     try {
         e.preventDefault();
         // searchField.value.split('').forEach(e => console.log('123456789'.indexOf(e)));
         if (Number.isInteger(Number(searchField.value))) return;
-        const city = await (await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${searchField.value.trim()}&language=ru`)).json();
+        const city = await cityData(searchField.value);
         const { longitude, latitude, country, name } = city.results[0];
-        const { current_weather, hourly } = await (await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m&hourly=weathercode&hourly=apparent_temperature&current_weather=true&past_days=0&windspeed_unit=ms&winddirection_10m_dominant&hourly=pressure_msl`)).json();
+        const { current_weather, hourly } = await weatherData(longitude, latitude);
         updateWeatherAnHours(hourly);
         updateTemperature(current_weather, country, name, hourly);
-        document.querySelector('.weather-main').style.display = "grid";
-        document.querySelector('.weather-main').style.animationPlayState = "running";
-        document.querySelector('.weather-for-the-day').style.display = "flex";
-        document.querySelector('.weather-for-the-day').style.animationPlayState = "running";
-        document.querySelector('.section-error').style.display = "none";
         windDirection(current_weather.windspeed, current_weather.winddirection);
         let clock;
         updateTimeAndDate(clock);
-
         searchField.value = '';
         searchField.blur();
-        degSwitch.style.pointerEvents = 'auto';
         changeImgAndIcon(current_weather.weathercode);
+        startUse();
         weatherAllTemp.scrollLeft = 0;
     }
     catch (e) {
@@ -53,6 +69,28 @@ async function test(e) {
         document.querySelector('.error').textContent = `Error: ${e}`;
     }
 }
+
+const startUse = function () {
+    document.querySelector('.weather-main').style.display = "grid";
+    document.querySelector('.weather-main').style.animationPlayState = "running";
+    document.querySelector('.weather-for-the-day').style.display = "flex";
+    document.querySelector('.weather-for-the-day').style.animationPlayState = "running";
+    document.querySelector('.section-error').style.display = "none";
+    degSwitch.style.pointerEvents = 'auto';
+};
+
+const weatherData = async function (long, lat) {
+    return await (await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&hourly=temperature_2m&hourly=weathercode&hourly=apparent_temperature&current_weather=true&past_days=0&windspeed_unit=ms&winddirection_10m_dominant&hourly=pressure_msl`)).json();
+};
+
+const cityData = async function (citeName) {
+    if (citeName.longitude) {
+        const testing = await (await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${citeName.latitude}&lon=${citeName.longitude}&format=json`)).json();
+        console.log(testing);
+        return testing.address;
+    }
+    return await (await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${citeName.trim()}&language=ru`)).json();
+};
 
 function windDirection(windSpeed, winddirection) {
     if (winddirection >= 45 && winddirection < 90) winddirection = 'Северо-Восточный';

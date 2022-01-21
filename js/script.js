@@ -22,11 +22,11 @@ async function test(e) {
         // searchField.value.split('').forEach(e => console.log('123456789'.indexOf(e)));
         if (Number.isInteger(Number(searchField.value))) return;
         const city = await (await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${searchField.value}&language=ru`)).json();
-        const { longitude, latitude, country, admin1 } = city.results[0];
-
-        const { current_weather, hourly } = await (await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m&hourly=weathercode&hourly=apparent_temperature&current_weather=true&past_days=0&windspeed_unit=ms&winddirection_10m_dominant`)).json();
+        const { longitude, latitude, country, name } = city.results[0];
+        console.log(city);
+        const { current_weather, hourly } = await (await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m&hourly=weathercode&hourly=apparent_temperature&current_weather=true&past_days=0&windspeed_unit=ms&winddirection_10m_dominant&hourly=pressure_msl`)).json();
         updateWeatherAnHours(hourly);
-        updateTemperature(current_weather, country, admin1, hourly);
+        updateTemperature(current_weather, country, name, hourly);
         document.querySelector('.weather-main').style.display = "grid";
         document.querySelector('.weather-main').style.animationPlayState = "running";
         document.querySelector('.weather-for-the-day').style.display = "flex";
@@ -75,9 +75,11 @@ const updateTemperature = function (current_weather, country, city, hourly) {
     cityName.textContent = `${city}, ${country}`;
     celsiusNow = current_weather.temperature;
     hourly.time.forEach((el, i) => {
-        if (current_weather.time === el)
+        if (current_weather.time === el) {
             document.querySelector('.degress-apparent').textContent = `Ощущается как: ${Math.round(hourly.apparent_temperature[i])}°`;
-        degreesApparent = hourly.apparent_temperature[i];
+            degreesApparent = hourly.apparent_temperature[i];
+            console.log(`${hourly.pressure_msl[i]}hPa`);
+        }
     });
 };
 
@@ -241,7 +243,7 @@ degSwitch.addEventListener('click', function (e) {
 
     if (e.target.textContent === "C" && !(e.target.classList.contains('deg-activ'))) {
         temperatureDegrees.classList.remove('degreesF');
-        temperatureDegrees.textContent = celsiusNow;
+        temperatureDegrees.textContent = Math.round(+celsiusNow);
         document.querySelector('.degress-apparent').textContent = `Ощущается как: ${Math.round(degreesApparent)}°`;
         if (celsiusAnHour.length > 1) {
             [...document.querySelectorAll('.degrees-hour')]

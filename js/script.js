@@ -12,6 +12,7 @@ const weatherAllTemp = document.querySelector('.weather-all-temp');
 const btnScrollLeft = document.querySelector('.btn-scroll--left');
 const btnScrollRight = document.querySelector('.btn-scroll--right');
 const weatherSpeed = document.querySelector('.weather-speed');
+const pressireMl = document.querySelector('.pressure');
 
 
 let celsiusNow;
@@ -21,9 +22,8 @@ async function test(e) {
         e.preventDefault();
         // searchField.value.split('').forEach(e => console.log('123456789'.indexOf(e)));
         if (Number.isInteger(Number(searchField.value))) return;
-        const city = await (await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${searchField.value}&language=ru`)).json();
+        const city = await (await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${searchField.value.trim()}&language=ru`)).json();
         const { longitude, latitude, country, name } = city.results[0];
-        console.log(city);
         const { current_weather, hourly } = await (await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m&hourly=weathercode&hourly=apparent_temperature&current_weather=true&past_days=0&windspeed_unit=ms&winddirection_10m_dominant&hourly=pressure_msl`)).json();
         updateWeatherAnHours(hourly);
         updateTemperature(current_weather, country, name, hourly);
@@ -78,7 +78,7 @@ const updateTemperature = function (current_weather, country, city, hourly) {
         if (current_weather.time === el) {
             document.querySelector('.degress-apparent').textContent = `Ощущается как: ${Math.round(hourly.apparent_temperature[i])}°`;
             degreesApparent = hourly.apparent_temperature[i];
-            console.log(`${hourly.pressure_msl[i]}hPa`);
+            pressireMl.textContent = `Давление: ${Math.round(0.75 * hourly.pressure_msl[i])} мм.рт.ст.`;
         }
     });
 };

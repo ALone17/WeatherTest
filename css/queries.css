@@ -11,10 +11,6 @@
   .weather-for-the-day {
     height: 25vh;
   }
-
-  .weather-all-temp {
-    overflow: scroll;
-  }
 }
 @media (max-width: 76.8rem) {
   .header {

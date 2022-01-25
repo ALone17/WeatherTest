@@ -77,6 +77,9 @@ const startUse = function () {
     document.querySelector('.weather-for-the-day').style.animationPlayState = "running";
     document.querySelector('.section-error').style.display = "none";
     degSwitch.style.pointerEvents = 'auto';
+    if (window.matchMedia("(max-width: 27.75rem)").matches) {
+        console.log('Yes');
+    }
 };
 
 const weatherData = async function (long, lat) {
@@ -156,7 +159,7 @@ const celsiusToFahrenheit = function (celsius) {
 
 const changeImgAndIcon = function (Code) {
 
-    backgroundFon.style.backgroundImage = `url(/img/осадки/${weatherIcon(Code)}.jpg)`;
+    backgroundFon.style.backgroundImage = `url(/img/осадки/${window.matchMedia("(max-width: 27.75rem)").matches ? weatherIcon(Code) + '-small' : weatherIcon(Code)}.jpg)`;
     Precipitation.innerHTML = "";
     Precipitation.insertAdjacentHTML('afterbegin', `<ion-icon class="${(new Date().getHours() > 7 && new Date().getHours() < 20) || weatherIcon(Code) === "cloud" ? weatherIcon(Code) : 'moon'}-icon" name="${(new Date().getHours() > 7 && new Date().getHours() < 20) || weatherIcon(Code) === "cloud" ? weatherIcon(Code) : 'moon'}"></ion-icon>
     <p class="precipitation-name">${weatherCode(Code)}</p>`);

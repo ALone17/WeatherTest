@@ -93,6 +93,7 @@ const cityData = async function (citeName) {
 };
 
 function windDirection(windSpeed, winddirection) {
+    if (winddirection >= 0 && winddirection < 45) winddirection = 'Северный';
     if (winddirection >= 45 && winddirection < 90) winddirection = 'Северо-Восточный';
     if (winddirection >= 90 && winddirection < 135) winddirection = "Восточный";
     if (winddirection >= 135 && winddirection < 180) winddirection = "Южно-Восточный";

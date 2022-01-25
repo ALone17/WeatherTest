@@ -5,11 +5,11 @@
   }
 
   .weather-main {
-    height: 25vh;
+    height: auto;
   }
 
   .weather-for-the-day {
-    height: 25vh;
+    height: auto;
   }
 }
 @media (max-width: 76.8rem) {
@@ -59,7 +59,7 @@
 @media (max-width: 23.75rem) {
   .weather-main {
     width: 99%;
-    height: 20vh;
+    height: auto;
     position: relative;
     overflow: hidden;
   }
@@ -80,7 +80,7 @@
 
   .weather-for-the-day {
     width: 99%;
-    height: 20vh;
+    height: auto;
     overflow: hidden;
   }
 } ;
